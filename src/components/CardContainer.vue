@@ -1,53 +1,60 @@
 <template>
   <div class="container">
-
-      <div class="input-group justify-content-center py-5">
-
-        <input type="text" class="w-25" 
-
+    <div class="input-group justify-content-center py-5">
+      <input
+        type="text"
+        class="w-50 fs-2"
         placeholder="Cosa vuoi cercare..."
-        v-model="query" 
-        @keyup.enter="ricerca('search/movie', query, 'movies') && ricerca('search/tv', query, 'series')" 
-        />
-        
-        <button class="btn btn-outline-secondary" 
-        type="button" 
 
-        @click="ricerca('search/movie', query, 'movies') && ricerca('search/tv', query, 'series')">
-        
-        Trova</button>
+        v-model="query"
+        @keyup.enter="
+          ricerca('search/movie', query, 'movies');
+          ricerca('search/tv', query, 'series');
+        "
+      />
+
+      <button
+        class="btn btn-outline-secondary fs-2"
+        type="button"
+
+        @click="
+          ricerca('search/movie', query, 'movies');
+          ricerca('search/tv', query, 'series');
+        "
+      >
+        Trova
+      </button>
+    </div>
+
+    <div class="row align-items-start">
+      <div class="col">
+        <h2 class="py-2">Film Trovati</h2>
+
+        <ul  v-for="movie in movies" :key="movie.id">
+          <SingolCard
+            :titolo="movie.title"
+            :titoloOriginale="movie.original_title"
+            :lingua="movie.original_language"
+            :voto="movie.vote_average"
+          >
+          </SingolCard>
+        </ul>
       </div>
+      <div class="col">
+        <h2 class="py-2">Serie Trovate</h2>
 
-
-      <h2>Film Trovati</h2>
-
-    <ul class="list-unstyled"  v-for="movie in movies" :key="movie.id">
-
-      <SingolCard
-       :titolo=movie.title
-       :titoloOriginale=movie.original_title
-       :lingua=movie.original_language
-       :voto=movie.vote_average
-      
-      > </SingolCard>
-    </ul>
-
-     <h2>Serie Trovate</h2>
-
-    <ul class="list-unstyled" v-for="serie in series" :key="serie.id">
-      <SingolCard
-       :titolo=serie.name
-       :titoloOriginale=serie.original_name
-       :lingua=serie.original_language
-       :voto=serie.vote_average
-      
-      > </SingolCard>
-    </ul>
-
-
+        <ul  v-for="serie in series" :key="serie.id">
+          <SingolCard
+            :titolo="serie.name"
+            :titoloOriginale="serie.original_name"
+            :lingua="serie.original_language"
+            :voto="serie.vote_average"
+          >
+          </SingolCard>
+        </ul>
+      </div>
+    </div>
   </div>
-
-  
 </template>
 
 <script>
@@ -84,8 +91,6 @@ export default {
           this[dataArray] = ele.data.results;
         });
     },
-
-    
   },
   /* mounted() {
     //carico i film dalla ricerca in array muvies

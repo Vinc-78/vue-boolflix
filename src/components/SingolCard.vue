@@ -1,6 +1,6 @@
 <template>
 
-<li> {{titolo}} - ({{titoloOriginale}}) - {{lingua}} - {{voto}}</li>
+<li class="fs-3"> {{titolo}} - ({{titoloOriginale}}) - {{lingua}} - {{voto}}</li>
 
   
 </template>
