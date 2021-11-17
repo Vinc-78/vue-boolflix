@@ -34,7 +34,7 @@
           <SingolCard
             :titolo="movie.title"
             :titoloOriginale="movie.original_title"
-            :lingua="movie.original_language"
+            :lingua="langFlags[movie.original_language]"      
             :voto="movie.vote_average"
           >
           </SingolCard>
@@ -47,7 +47,7 @@
           <SingolCard
             :titolo="serie.name"
             :titoloOriginale="serie.original_name"
-            :lingua="serie.original_language"
+            :lingua="langFlags[serie.original_language]"
             :voto="serie.vote_average"
           >
           </SingolCard>
@@ -74,6 +74,11 @@ export default {
       language: "it",
       movies: [],
       series: [],
+      langFlags : {
+        en:"en.png",
+        it:"it.png",
+        
+      }
     };
   },
 
