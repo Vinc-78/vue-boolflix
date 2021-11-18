@@ -1,57 +1,67 @@
 <template>
   <div class="container">
-    <div class="input-group justify-content-center py-5">
+    <div class="input-group justify-content-end py-5">
       <input
         type="text"
         class="w-50 fs-2"
         placeholder="Cosa vuoi cercare..."
-
-        v-model="query"
+        v-model="testo"
         @keyup.enter="
-          ricerca('search/movie', query, 'movies');
-          ricerca('search/tv', query, 'series');
+          ricerca('search/movie', testo, 'movies');
+          ricerca('search/tv', testo, 'series');
         "
       />
 
       <button
         class="btn btn-outline-secondary fs-2"
         type="button"
-
         @click="
-          ricerca('search/movie', query, 'movies');
-          ricerca('search/tv', query, 'series');
+          ricerca('search/movie', testo, 'movies');
+          ricerca('search/tv', testo, 'series');
         "
       >
         Trova
       </button>
     </div>
+    <h1 class="py-4 fs-1 fw-bold">Film Trovati</h1>
+    <div class="row row-cols-3" >
 
-    <div class="row align-items-start">
-      <div class="col">
-        <h2 class="py-2">Film Trovati</h2>
+      
+      <div class="col g-3" v-for="movie in movies " :key="movie.id">
+        
 
-        <ul  v-for="movie in movies" :key="movie.id">
-          <SingolCard
-            :titolo="movie.title"
-            :titoloOriginale="movie.original_title"
-            :lingua="langFlags[movie.original_language]"      
-            :voto="movie.vote_average"
-          >
-          </SingolCard>
-        </ul>
+        <SingolCard 
+          
+          :titolo="movie.title"
+          :titoloOriginale="movie.original_title"
+          :paese="movie.original_language"
+          :lingua="langFlags[movie.original_language]"
+          :voto="movie.vote_average"
+          :cover="movie.poster_path"
+        >
+        </SingolCard>
+
+
       </div>
-      <div class="col">
-        <h2 class="py-2">Serie Trovate</h2>
 
-        <ul  v-for="serie in series" :key="serie.id">
-          <SingolCard
-            :titolo="serie.name"
-            :titoloOriginale="serie.original_name"
-            :lingua="langFlags[serie.original_language]"
-            :voto="serie.vote_average"
-          >
-          </SingolCard>
-        </ul>
+    </div>
+
+    <h1 class="py-4 fs-1 fw-bold">Serie Trovate</h1>
+
+     <div class="row row-cols-3" >
+
+      
+      <div class="col g-3" v-for="serie in series" :key="serie.id">
+
+        <SingolCard 
+          :titolo="serie.name"
+          :titoloOriginale="serie.original_name"
+          :paese="serie.original_language"
+          :lingua="langFlags[serie.original_language]"
+          :voto="serie.vote_average"
+          :cover="serie.poster_path"
+        >
+        </SingolCard>
       </div>
     </div>
   </div>
@@ -70,15 +80,14 @@ export default {
     return {
       url: "https://api.themoviedb.org/3/",
       api_key: "8a86c3952094b7a659a25e6d8a64f76e",
-      query: "",
+      testo: "",
       language: "it",
       movies: [],
       series: [],
-      langFlags : {
-        en:"en.png",
-        it:"it.png",
-        
-      }
+      langFlags: {
+        en: "en.png",
+        it: "it.png",
+      },
     };
   },
 
