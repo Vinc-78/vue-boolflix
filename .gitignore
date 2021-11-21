@@ -1,7 +1,8 @@
 .DS_Store
 node_modules
 
-
+BoolFlix_con_Vue.pdf
+image.png
 
 # local env files
 .env.local

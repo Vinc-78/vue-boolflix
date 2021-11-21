@@ -12,6 +12,7 @@
         @keyup.enter="
           ricerca('search/movie', testo, 'movies');
           ricerca('search/tv', testo, 'series');
+          ricercaGenere();
         "
       />
 
@@ -21,6 +22,7 @@
         @click="
           ricerca('search/movie', testo, 'movies');
           ricerca('search/tv', testo, 'series');
+          ricercaGenere()
         "
       >
         Cerca
@@ -48,6 +50,8 @@
           :voto="movie.vote_average"
           :cover="movie.poster_path"
           :trama="movie.overview"
+          :cardgeneri="movie.genre_ids"
+          :allgenere="genere"
         >
         </SingolCard>
 
@@ -71,6 +75,8 @@
           :voto="serie.vote_average"
           :cover="serie.poster_path"
           :trama="serie.overview"
+          :cardgeneri="serie.genre_ids"
+          :allgenere="genere"
         >
         </SingolCard>
       </div>
@@ -96,11 +102,12 @@ export default {
       language: "it",
       movies: [],
       series: [],
+      genere:[],
       langFlags: {
         en: "en.png",
         it: "it.png",
-        
       },
+     
       
     };
   },
@@ -108,18 +115,35 @@ export default {
   methods: {
     ricerca(url_tipo, query, dataArray) {
       axios
-        .get(this.url + url_tipo, {
+        .get(this.url + url_tipo , {
           params: {
             api_key: this.api_key,
             query: query,
             language: this.language,
+            
           },
         })
         .then((ele) => {
           this[dataArray] = ele.data.results;
         });
     },
-  },
+  
+  ricercaGenere(){   
+    axios
+        .get(this.url + 'genre/movie/list' , {
+          params: {
+            api_key: this.api_key,
+            language: this.language,
+            
+          },
+        })
+        .then((gen) => {
+          this.genere = gen.data.genres;
+        });
+        
+    },
+
+  }
 
   
   /* mounted() {
